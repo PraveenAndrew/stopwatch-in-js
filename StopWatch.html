@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+       <meta charset="UTF-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>StopWatch in JS</title>
+       <style>
+              body 
+              {
+                     display: flex;
+                     align-items: center;
+                     justify-content: center;
+                     height: 100vh;
+                     background-color: red;
+                     color: aqua;
+                     flex-direction: column;
+              }
+              .stopwatch 
+              {
+                     font-size: 15em;
+                     font-family: monospace;
+              }
+              .laps 
+              {
+                     margin:0;
+                     padding: 0;
+              }
+              .laps li 
+              {
+                     /* list-style: none; */
+              }
+       </style>
+</head>
+<body>
+       
+
+       <h1>STOPWATCH</h1>
+
+  <div class="controls">
+        <button type="button" onclick="start();">Start</button>
+        <button type="button" onclick="pause();">Pause</button>
+        <button type="button" onclick="stop()">Stop</button>
+        <button type="button" onclick="restart();">Restart</button>
+        <button type="button" onclick="lap();">Lap</button>
+        <button type="button" onclick="resetLaps();">Reset Lap</button>
+  </div>
+
+     <div class="stopwatch" id="stopwatch">00:00:00:00</div>
+     <ul id="lapsContainer" class="laps"></ul>
+
+
+      <script>
+             var stopwatch = document.getElementById('stopwatch');
+             var lapsContanier = document.getElementById('lapsContainer');
+
+             var m = 0,s = 0,ms = 0;
+
+             var timer;
+             console.log(timer);
+
+             function start() 
+              {
+                     if(!timer)
+                     {
+                           timer =  setInterval(run,1); //this only call 100 times // 10 milliseconds 
+                     //    1000 milliseconds = 1 seconds
+                     }
+                     else 
+                     {
+                            var str = "timer is set";
+                            console.log(str);
+                     }
+              };
+
+              function run() 
+              {
+                  stopwatch.innerHTML = getTimer();
+                  ms++;
+                  
+                  if(ms == 500)
+                  {
+                    s++;
+                    ms = 0;        
+                  
+                  }
+                  if(s == 3)
+                  {
+                         m++;
+                         s = 0;
+                  }
+
+              };
+
+              function getTimer() 
+              {
+                      return ((m < 10) ? '0' + m : m) + ':' + ((s < 10) ? '0' + s : s) + ':' + ((ms < 10) ? '0' + ms : ms);
+
+              }
+
+             function pause() 
+             {
+                stopTimer();
+             };
+
+             function stop() 
+             {
+                    ms=0;
+                    s=0;
+                    m=0;
+
+                    stopTimer();
+                    stopwatch.innerHTML = getTimer();
+             };
+
+             function stopTimer() 
+             {
+                 clearInterval(timer); 
+                 timer = '';
+             };
+
+             function restart() 
+             {
+                    stop();
+                    start();
+             };
+
+             function lap() 
+             {
+                    var li = document.createElement('li');
+                    li.innerHTML = getTimer();
+
+                    lapsContanier.appendChild(li);
+             };
+
+             function resetLaps() 
+             {
+                      lapsContanier.innerHTML = '';
+             };
+
+      </script>
+
+
+</body>
+</html>
